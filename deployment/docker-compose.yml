@@ -1,0 +1,56 @@
+version: "3"
+services:
+  gateway:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+     - 80:80
+     - 443:443
+    networks:
+     - net
+    volumes:
+     - ./nginx.conf:/etc/nginx/nginx.conf
+     - ./keys/forum.crt:/etc/nginx/forum.crt
+     - ./keys/forum.key:/etc/nginx/forum.key
+    depends_on: 
+     - forum
+     - forum2
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432"
+    networks:
+     - net
+
+  forum:
+    image: app:latest
+    container_name: forum
+    environment: 
+      - name=left
+    depends_on:
+     - "postgres"
+    networks:
+     - net
+
+  forum2:
+    image: app:latest
+    container_name: forum2
+    environment: 
+      - name=right
+    depends_on:
+     - "postgres"
+    networks:
+     - net     
+
+
+
+networks:
+  net:
