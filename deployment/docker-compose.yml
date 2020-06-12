@@ -35,6 +35,11 @@ services:
     container_name: forum
     environment: 
       - name=left
+      - PG_DB_NAME=postgres
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=123
     depends_on:
      - "postgres"
     networks:
@@ -45,6 +50,11 @@ services:
     container_name: forum2
     environment: 
       - name=right
+      - PG_DB_NAME=postgres
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=123
     depends_on:
      - "postgres"
     networks:
