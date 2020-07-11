@@ -12,4 +12,4 @@ stop_services:
 ship_it: stop_services build deploy
 
 e2e: ship_it
-	 ./test/e2etest.sh
+	 ./test/e2etest.sh sh
