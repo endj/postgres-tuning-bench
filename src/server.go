@@ -146,14 +146,18 @@ func createReply(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	fmt.Fprintf(w, "%s\n", string(json))
 }
 
+func handleRootCall(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	http.Redirect(w, r, "https://www.localhost/boards", 302)
+}
+
 func main() {
 	router := httprouter.New()
-
-	router.GET("/board", getBoards)
-	router.GET("/board/:board", getBoard)
-	router.GET("/board/:board/thread/:thread", getThread)
-	router.POST("/board/:board/thread", createThread)
-	router.POST("/board/:board/thread/:thread/reply", createReply)
+	router.GET("/", handleRootCall)
+	router.GET("/boards", getBoards)
+	router.GET("/boards/:board", getBoard)
+	router.GET("/boards/:board/threads/:thread", getThread)
+	router.POST("/boards/:board/threads", createThread)
+	router.POST("/boards/:board/threads/:thread/reply", createReply)
 
 	log.Print("Starting server ", os.Getenv("name"))
 

@@ -30,7 +30,7 @@ type Input struct {
 
 const (
 	createPostQuery  = "INSERT INTO posts(post,thread_id) values($1,$2) returning id"
-	creatThreadQuery = "INSERT INTO threads(board_id, post, title) SELECT id, $1, $2 from boards where title = $3 RETURNING id"
+	createThreadQuery = "INSERT INTO threads(board_id, post, title) SELECT id, $1, $2 from boards where title = $3 RETURNING id"
 )
 
 // CreateThread : Creates a thread and a post linked to the thread
@@ -44,7 +44,7 @@ func CreateThread(db *sql.DB, input *Input, boardName string) (*Thread, error) {
 	}
 
 	var threadID int
-	err = tx.QueryRowContext(ctx, creatThreadQuery, input.Post, input.Title, boardName).Scan(&threadID)
+	err = tx.QueryRowContext(ctx, createThreadQuery, input.Post, input.Title, boardName).Scan(&threadID)
 	if err != nil {
 		tx.Rollback()
 		return nil, err
@@ -60,6 +60,7 @@ func CreateThread(db *sql.DB, input *Input, boardName string) (*Thread, error) {
 	err = tx.Commit()
 	if err != nil {
 		log.Print("Failed to commit transaction")
+		return nil, err
 	}
 
 	thread := Thread{
