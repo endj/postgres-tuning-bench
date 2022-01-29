@@ -1,4 +1,4 @@
-Abonded project but might take a look at it now that Go has generics
+# Abonded project but might take a look at it again someday now that Go has generics
 
 Sandbox system for testing with various read/write ratios and sizes. 
 Made mostly for testing Postgres settings with various such as:
