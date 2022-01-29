@@ -1,3 +1,5 @@
+Abonded project but might take a look at it now that Go has generics
+
 Sandbox system for testing with various read/write ratios and sizes. 
 Made mostly for testing Postgres settings with various such as:
 
@@ -6,7 +8,7 @@ fsync
 adding/removing indexes
 fillfactor
  
-# TODO
+### TODO
 
 * Serve static files from nginx
 * Create simple gui
